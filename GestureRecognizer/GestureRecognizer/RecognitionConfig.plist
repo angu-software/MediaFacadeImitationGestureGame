@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>GestureWeights</key>
+	<dict>
+		<key>MaxG</key>
+		<array>
+			<real>0.5</real>
+			<string>0,5</string>
+			<string>0,25</string>
+			<string></string>
+		</array>
+		<key>MeanG</key>
+		<array>
+			<integer>1</integer>
+			<integer>1</integer>
+			<real>0.75</real>
+		</array>
+		<key>MedianG</key>
+		<array>
+			<integer>1</integer>
+			<integer>1</integer>
+			<real>0.75</real>
+		</array>
+		<key>Power</key>
+		<real>0.5</real>
+		<key>Speed</key>
+		<real>0.5</real>
+		<key>SpatialExtension</key>
+		<real>0.5</real>
+	</dict>
+	<key>MinRecordLen</key>
+	<integer>10</integer>
+</dict>
+</plist>
