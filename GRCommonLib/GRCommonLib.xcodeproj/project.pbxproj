@@ -1,0 +1,331 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E1CD6D7C15B465F800AB949D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CD6D7B15B465F800AB949D /* Foundation.framework */; };
+		E1CD6D9C15B4663800AB949D /* GRDirectionFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CD6D8915B4663800AB949D /* GRDirectionFilter.h */; };
+		E1CD6D9D15B4663800AB949D /* GRDirectionFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = E1CD6D8A15B4663800AB949D /* GRDirectionFilter.m */; };
+		E1CD6D9E15B4663800AB949D /* GREqualityFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CD6D8B15B4663800AB949D /* GREqualityFilter.h */; };
+		E1CD6D9F15B4663800AB949D /* GREqualityFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = E1CD6D8C15B4663800AB949D /* GREqualityFilter.m */; };
+		E1CD6DA015B4663800AB949D /* GRFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CD6D8D15B4663800AB949D /* GRFilter.h */; };
+		E1CD6DA115B4663800AB949D /* GRFilterChain.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CD6D8E15B4663800AB949D /* GRFilterChain.h */; };
+		E1CD6DA215B4663800AB949D /* GRFilterChain.m in Sources */ = {isa = PBXBuildFile; fileRef = E1CD6D8F15B4663800AB949D /* GRFilterChain.m */; };
+		E1CD6DA315B4663800AB949D /* GRConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CD6D9015B4663800AB949D /* GRConstants.h */; };
+		E1CD6DA415B4663800AB949D /* GRDataStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CD6D9115B4663800AB949D /* GRDataStorage.h */; };
+		E1CD6DA515B4663800AB949D /* GRDataStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = E1CD6D9215B4663800AB949D /* GRDataStorage.m */; };
+		E1CD6DA615B4663800AB949D /* GRGesture.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CD6D9315B4663800AB949D /* GRGesture.h */; };
+		E1CD6DA715B4663800AB949D /* GRGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = E1CD6D9415B4663800AB949D /* GRGesture.m */; };
+		E1CD6DA815B4663800AB949D /* GRMainControllerBase.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CD6D9515B4663800AB949D /* GRMainControllerBase.h */; };
+		E1CD6DA915B4663800AB949D /* GRMainControllerBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E1CD6D9615B4663800AB949D /* GRMainControllerBase.m */; };
+		E1CD6DAA15B4663800AB949D /* GRMotionVector.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CD6D9715B4663800AB949D /* GRMotionVector.h */; };
+		E1CD6DAB15B4663800AB949D /* GRMotionVector.m in Sources */ = {isa = PBXBuildFile; fileRef = E1CD6D9815B4663800AB949D /* GRMotionVector.m */; };
+		E1CD6DAC15B4663800AB949D /* GRVectorOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CD6D9915B4663800AB949D /* GRVectorOperation.h */; };
+		E1CD6DAD15B4663800AB949D /* GRVectorOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E1CD6D9A15B4663800AB949D /* GRVectorOperation.m */; };
+		E1CD6DAE15B4663800AB949D /* GRViewControllerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CD6D9B15B4663800AB949D /* GRViewControllerDelegate.h */; };
+		E1CD6DB515B4670D00AB949D /* GRMotionSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CD6DB315B4670D00AB949D /* GRMotionSensor.h */; };
+		E1CD6DB615B4670D00AB949D /* GRMotionSensor.m in Sources */ = {isa = PBXBuildFile; fileRef = E1CD6DB415B4670D00AB949D /* GRMotionSensor.m */; };
+		E1CD6DBA15B4674E00AB949D /* GRFeedbackController.h in Headers */ = {isa = PBXBuildFile; fileRef = E1CD6DB815B4674E00AB949D /* GRFeedbackController.h */; };
+		E1CD6DBB15B4674E00AB949D /* GRFeedbackController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1CD6DB915B4674E00AB949D /* GRFeedbackController.m */; };
+		E1CD6DBD15B467CF00AB949D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CD6DBC15B467CF00AB949D /* UIKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		E1CD6D7815B465F800AB949D /* libGRCommonLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGRCommonLib.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1CD6D7B15B465F800AB949D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E1CD6D7F15B465F800AB949D /* GRCommonLib-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GRCommonLib-Prefix.pch"; sourceTree = "<group>"; };
+		E1CD6D8915B4663800AB949D /* GRDirectionFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRDirectionFilter.h; sourceTree = "<group>"; };
+		E1CD6D8A15B4663800AB949D /* GRDirectionFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRDirectionFilter.m; sourceTree = "<group>"; };
+		E1CD6D8B15B4663800AB949D /* GREqualityFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GREqualityFilter.h; sourceTree = "<group>"; };
+		E1CD6D8C15B4663800AB949D /* GREqualityFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GREqualityFilter.m; sourceTree = "<group>"; };
+		E1CD6D8D15B4663800AB949D /* GRFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRFilter.h; sourceTree = "<group>"; };
+		E1CD6D8E15B4663800AB949D /* GRFilterChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRFilterChain.h; sourceTree = "<group>"; };
+		E1CD6D8F15B4663800AB949D /* GRFilterChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRFilterChain.m; sourceTree = "<group>"; };
+		E1CD6D9015B4663800AB949D /* GRConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRConstants.h; sourceTree = "<group>"; };
+		E1CD6D9115B4663800AB949D /* GRDataStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRDataStorage.h; sourceTree = "<group>"; };
+		E1CD6D9215B4663800AB949D /* GRDataStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRDataStorage.m; sourceTree = "<group>"; };
+		E1CD6D9315B4663800AB949D /* GRGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRGesture.h; sourceTree = "<group>"; };
+		E1CD6D9415B4663800AB949D /* GRGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRGesture.m; sourceTree = "<group>"; };
+		E1CD6D9515B4663800AB949D /* GRMainControllerBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMainControllerBase.h; sourceTree = "<group>"; };
+		E1CD6D9615B4663800AB949D /* GRMainControllerBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRMainControllerBase.m; sourceTree = "<group>"; };
+		E1CD6D9715B4663800AB949D /* GRMotionVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMotionVector.h; sourceTree = "<group>"; };
+		E1CD6D9815B4663800AB949D /* GRMotionVector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRMotionVector.m; sourceTree = "<group>"; };
+		E1CD6D9915B4663800AB949D /* GRVectorOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVectorOperation.h; sourceTree = "<group>"; };
+		E1CD6D9A15B4663800AB949D /* GRVectorOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVectorOperation.m; sourceTree = "<group>"; };
+		E1CD6D9B15B4663800AB949D /* GRViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRViewControllerDelegate.h; sourceTree = "<group>"; };
+		E1CD6DB315B4670D00AB949D /* GRMotionSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMotionSensor.h; sourceTree = "<group>"; };
+		E1CD6DB415B4670D00AB949D /* GRMotionSensor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRMotionSensor.m; sourceTree = "<group>"; };
+		E1CD6DB815B4674E00AB949D /* GRFeedbackController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRFeedbackController.h; sourceTree = "<group>"; };
+		E1CD6DB915B4674E00AB949D /* GRFeedbackController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRFeedbackController.m; sourceTree = "<group>"; };
+		E1CD6DBC15B467CF00AB949D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E1CD6D7515B465F800AB949D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1CD6DBD15B467CF00AB949D /* UIKit.framework in Frameworks */,
+				E1CD6D7C15B465F800AB949D /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E1CD6D6D15B465F800AB949D = {
+			isa = PBXGroup;
+			children = (
+				E1CD6D7D15B465F800AB949D /* GRCommonLib */,
+				E1CD6D7A15B465F800AB949D /* Frameworks */,
+				E1CD6D7915B465F800AB949D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E1CD6D7915B465F800AB949D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E1CD6D7815B465F800AB949D /* libGRCommonLib.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E1CD6D7A15B465F800AB949D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E1CD6DBC15B467CF00AB949D /* UIKit.framework */,
+				E1CD6D7B15B465F800AB949D /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E1CD6D7D15B465F800AB949D /* GRCommonLib */ = {
+			isa = PBXGroup;
+			children = (
+				E1CD6D8815B4663800AB949D /* Filter */,
+				E1CD6D9015B4663800AB949D /* GRConstants.h */,
+				E1CD6D9115B4663800AB949D /* GRDataStorage.h */,
+				E1CD6D9215B4663800AB949D /* GRDataStorage.m */,
+				E1CD6DB815B4674E00AB949D /* GRFeedbackController.h */,
+				E1CD6DB915B4674E00AB949D /* GRFeedbackController.m */,
+				E1CD6D9315B4663800AB949D /* GRGesture.h */,
+				E1CD6D9415B4663800AB949D /* GRGesture.m */,
+				E1CD6D9515B4663800AB949D /* GRMainControllerBase.h */,
+				E1CD6D9615B4663800AB949D /* GRMainControllerBase.m */,
+				E1CD6DB315B4670D00AB949D /* GRMotionSensor.h */,
+				E1CD6DB415B4670D00AB949D /* GRMotionSensor.m */,
+				E1CD6D9715B4663800AB949D /* GRMotionVector.h */,
+				E1CD6D9815B4663800AB949D /* GRMotionVector.m */,
+				E1CD6D9915B4663800AB949D /* GRVectorOperation.h */,
+				E1CD6D9A15B4663800AB949D /* GRVectorOperation.m */,
+				E1CD6D9B15B4663800AB949D /* GRViewControllerDelegate.h */,
+				E1CD6D7E15B465F800AB949D /* Supporting Files */,
+			);
+			path = GRCommonLib;
+			sourceTree = "<group>";
+		};
+		E1CD6D7E15B465F800AB949D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E1CD6D7F15B465F800AB949D /* GRCommonLib-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E1CD6D8815B4663800AB949D /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				E1CD6D8915B4663800AB949D /* GRDirectionFilter.h */,
+				E1CD6D8A15B4663800AB949D /* GRDirectionFilter.m */,
+				E1CD6D8B15B4663800AB949D /* GREqualityFilter.h */,
+				E1CD6D8C15B4663800AB949D /* GREqualityFilter.m */,
+				E1CD6D8D15B4663800AB949D /* GRFilter.h */,
+				E1CD6D8E15B4663800AB949D /* GRFilterChain.h */,
+				E1CD6D8F15B4663800AB949D /* GRFilterChain.m */,
+			);
+			path = Filter;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		E1CD6D7615B465F800AB949D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1CD6D9C15B4663800AB949D /* GRDirectionFilter.h in Headers */,
+				E1CD6D9E15B4663800AB949D /* GREqualityFilter.h in Headers */,
+				E1CD6DA015B4663800AB949D /* GRFilter.h in Headers */,
+				E1CD6DA115B4663800AB949D /* GRFilterChain.h in Headers */,
+				E1CD6DA315B4663800AB949D /* GRConstants.h in Headers */,
+				E1CD6DA415B4663800AB949D /* GRDataStorage.h in Headers */,
+				E1CD6DA615B4663800AB949D /* GRGesture.h in Headers */,
+				E1CD6DA815B4663800AB949D /* GRMainControllerBase.h in Headers */,
+				E1CD6DAA15B4663800AB949D /* GRMotionVector.h in Headers */,
+				E1CD6DAC15B4663800AB949D /* GRVectorOperation.h in Headers */,
+				E1CD6DAE15B4663800AB949D /* GRViewControllerDelegate.h in Headers */,
+				E1CD6DB515B4670D00AB949D /* GRMotionSensor.h in Headers */,
+				E1CD6DBA15B4674E00AB949D /* GRFeedbackController.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		E1CD6D7715B465F800AB949D /* GRCommonLib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E1CD6D8515B465F800AB949D /* Build configuration list for PBXNativeTarget "GRCommonLib" */;
+			buildPhases = (
+				E1CD6D7415B465F800AB949D /* Sources */,
+				E1CD6D7515B465F800AB949D /* Frameworks */,
+				E1CD6D7615B465F800AB949D /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GRCommonLib;
+			productName = GRCommonLib;
+			productReference = E1CD6D7815B465F800AB949D /* libGRCommonLib.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E1CD6D6F15B465F800AB949D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = E1CD6D7215B465F800AB949D /* Build configuration list for PBXProject "GRCommonLib" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E1CD6D6D15B465F800AB949D;
+			productRefGroup = E1CD6D7915B465F800AB949D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E1CD6D7715B465F800AB949D /* GRCommonLib */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E1CD6D7415B465F800AB949D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1CD6D9D15B4663800AB949D /* GRDirectionFilter.m in Sources */,
+				E1CD6D9F15B4663800AB949D /* GREqualityFilter.m in Sources */,
+				E1CD6DA215B4663800AB949D /* GRFilterChain.m in Sources */,
+				E1CD6DA515B4663800AB949D /* GRDataStorage.m in Sources */,
+				E1CD6DA715B4663800AB949D /* GRGesture.m in Sources */,
+				E1CD6DA915B4663800AB949D /* GRMainControllerBase.m in Sources */,
+				E1CD6DAB15B4663800AB949D /* GRMotionVector.m in Sources */,
+				E1CD6DAD15B4663800AB949D /* GRVectorOperation.m in Sources */,
+				E1CD6DB615B4670D00AB949D /* GRMotionSensor.m in Sources */,
+				E1CD6DBB15B4674E00AB949D /* GRFeedbackController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		E1CD6D8315B465F800AB949D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		E1CD6D8415B465F800AB949D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E1CD6D8615B465F800AB949D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/GRCommonLib.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GRCommonLib/GRCommonLib-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		E1CD6D8715B465F800AB949D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/GRCommonLib.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GRCommonLib/GRCommonLib-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E1CD6D7215B465F800AB949D /* Build configuration list for PBXProject "GRCommonLib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1CD6D8315B465F800AB949D /* Debug */,
+				E1CD6D8415B465F800AB949D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E1CD6D8515B465F800AB949D /* Build configuration list for PBXNativeTarget "GRCommonLib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1CD6D8615B465F800AB949D /* Debug */,
+				E1CD6D8715B465F800AB949D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E1CD6D6F15B465F800AB949D /* Project object */;
+}
