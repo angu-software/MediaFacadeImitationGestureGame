@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Title</key>
+			<string>Gesture recording</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>AutocapitalizationType</key>
+			<string>None</string>
+			<key>AutocorrectionType</key>
+			<string>No</string>
+			<key>DefaultValue</key>
+			<string>50</string>
+			<key>IsSecure</key>
+			<false/>
+			<key>Key</key>
+			<string>MotionInterval</string>
+			<key>KeyboardType</key>
+			<string>NumbersAndPunctuation</string>
+			<key>Title</key>
+			<string>Interval (Hz)</string>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Threshold</string>
+			<key>Key</key>
+			<string>MotionThreshold</string>
+			<key>DefaultValue</key>
+			<string>1.2</string>
+			<key>KeyboardType</key>
+			<string>NumbersAndPunctuation</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>ThresholdMode</string>
+			<key>Key</key>
+			<string>ThresholdMode</string>
+			<key>DefaultValue</key>
+			<string>TMAllAxes</string>
+			<key>Titles</key>
+			<array>
+				<string>AllAxes</string>
+				<string>XAxes</string>
+				<string>YAxes</string>
+				<string>ZAxes</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>TMAllAxes</string>
+				<string>TMXAxes</string>
+				<string>TMYAxes</string>
+				<string>TMZAxes</string>
+			</array>
+		</dict>
+	</array>
+	<key>StringsTable</key>
+	<string>Root</string>
+</dict>
+</plist>
