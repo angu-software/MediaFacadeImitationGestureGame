@@ -13,72 +13,20 @@
 
 @implementation GRMainController
 @synthesize trainingData = _trainingData;
+@synthesize gameHost = _gameHost;
+@synthesize hostPort = _hostPort;
 
--(void) setUpEnvironment{
-    
-    [super setUpEnvironment];
-    
-    // configuration settings
-    double interval = [[_trainingData.storageDataInfo objectForKey:kGTMotionIntervalStorageKey] doubleValue];
-    double threshold = [[_trainingData.storageDataInfo objectForKey:kGTMotionThresholdStorageKey] doubleValue];
-    enum ThresholdMode thMode = [[_trainingData.storageDataInfo objectForKey:kGTMotionThresholdModeStorageKey] intValue];
-        
-    self.motionSensor.detectionInterval = interval;
-    self.motionSensor.gravitationThreshold = threshold;
-    self.motionSensor.thresholdMode = thMode;
-    
-    GRGestureWeights* gestureWeights = [[GRGestureWeights alloc]init];
-    gestureWeights.lenghtWeight = WEIGHT_LEN;
-    gestureWeights.maxXWeight = WEIGHT_MAX_X;
-    gestureWeights.maxYWeight = WEIGHT_MAX_Y;
-    gestureWeights.maxZWeight = WEIGHT_MAX_Z;
-    gestureWeights.meanXWeight = WEIGHT_MEAN_X;
-    gestureWeights.meanYWeight = WEIGHT_MEAN_Y;
-    gestureWeights.meanZWeight = WEIGHT_MEAN_Z;
-    gestureWeights.medianXWeight = WEIGHT_MEDIAN_X;
-    gestureWeights.medianYWeight = WEIGHT_MEDIAN_Y;
-    gestureWeights.medianZWeight = WEIGHT_MEDIAN_Z;
-    gestureWeights.powerWeight = WEIGHT_POWER;
-    gestureWeights.speedWeight = WEIGHT_SPEED;
-    gestureWeights.spatialExtendWeight = WEIGHT_SPAEXT;
-    
-    [self setUniformGestureWeights:gestureWeights InStorrageData:_trainingData];
-    
-    [self.feedback preloadSaySoundsForTexts:[_trainingData classLabels] synchronous:NO];
-    
-    _nnClassifier = [[GRNNClassifier alloc]init];
-    _nnClassifier.referenceDataStorage = _trainingData;
-    
-    // set up the view
-    if (self.viewController) {
-        [(GRViewController*)self.viewController setDelegate:self];
-        // using key value observing to set the storageInfoLabel text when it was created
-        [(GRViewController*)self.viewController addObserver:self forKeyPath:@"storageInfoLabel" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:NULL];
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        _gameHost = HOST;
+        _hostPort = PORT;
     }
+    return self;
 }
 
-- (void)launch{
-    
-    // set Up with contents of file
-    NSString* docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString* storageFilePath = [docPath stringByAppendingPathComponent:kDataStorageFileName];
-    
-    if ([[NSFileManager defaultManager] fileExistsAtPath:storageFilePath]) {
-        Log(@"Loading training data from file: %@", storageFilePath);
-        _trainingData = [[GRDataStorage alloc] initWithContensOfFile:storageFilePath];
-        Log(@"trainin data=%@",_trainingData);
-        if (_trainingData.storageDataInfo) {
-            // set the same properties as at record time
-            [super launch];
-        }
-        Log(@"Initialisatzion done");
-    }else {
-        Log(@"Loading training data faild! File not found: %@", storageFilePath);
-        UIAlertView* allert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"No training data!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [allert show];
-    }
-    
-}
 
 #pragma mark - GTMotionSensorDelegate methods
 
@@ -101,12 +49,18 @@
     
     if (sender == self) {
         // run recognition        
-        if ([_liveData count] > MIN_RECORD_LEN) {
+        if ([_liveData count] >= MIN_RECORD_LEN) {
             [self setIsAlgorithmRunning:YES];
+            //filter data
+            [self filterLiveData];
             GRGesture* liveGesture = [[GRGesture alloc] initWithRecord:_liveData];
-            NSString* label = [_nnClassifier bestClassMatchFor:liveGesture];
-            [(GRViewController*)self.viewController classLabel].text = label;
+
+            NSString* label = [_nnClassifier bestClassMatchForGesture:liveGesture];
+            double minDistance = _nnClassifier.minDistance;
+            [(GRViewController*)self.viewController classLabel].text = [NSString stringWithFormat:@"%@ (%f)",label,minDistance];
             [self.feedback say:label];
+            [_networkController sendRecognizedClassLabel:label];
+            Log(@"Gesture classified as: %@ (%f)",label,minDistance);
             [self setIsAlgorithmRunning:NO];
         }
         [_liveData removeAllObjects];
@@ -121,18 +75,189 @@
     [self motionFinished:self];
 }
 
-#pragma mark - private methods
+#pragma mark - overridden methods from CRMainControllerBase
 
-- (void) setUniformGestureWeights:(GRGestureWeights*)gestureWeights InStorrageData:(GRDataStorage*) storage{
+- (void)checkNetwok {
+    if (!_networkController.isConnected) {
+        [self showAlertWithText:@"No connection to host!"];
+    }
+}
 
-    for (NSString* classLabel in storage.storageData) {
-        for (GRRecordSet* classRecodSet in [storage.storageData objectForKey:classLabel]) {
-            for (GRGesture* gesture in classRecodSet) {
-                gesture.gestureWeights = gestureWeights;
-            }
+- (void)launch{
+    
+    // set Up with contents of file
+    NSString* docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString* storageFilePath = [docPath stringByAppendingPathComponent:kDataStorageFileName];
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:storageFilePath]) {
+        Log(@"Loading training data from file: %@", storageFilePath);
+        _trainingData = [[GRDataStorage alloc] initWithContensOfFile:storageFilePath];
+        Log(@"trainin data=%@",_trainingData);
+        if (_trainingData.storageDataInfo) {
+            // set the same properties as at record time
+            [super launch];
         }
+        Log(@"Initialisatzion done");
+        [self relauch];
+    }else {
+        [self showAlertWithText:[NSString stringWithFormat:@"Loading training data faild! File not found: %@", storageFilePath]];
+        
+    }    
+    
+}
+
+-(void)tearDown{
+    [self hold];
+} 
+
+-(void)relauch{
+    [_networkController connect];
+    [self checkNetwok];
+}
+
+-(void)hold{
+    [_networkController disconnect];
+}
+
+-(void) setUpEnvironment{
+    
+    [super setUpEnvironment];
+    
+    // configuration settings from storrage file
+    double interval = [[_trainingData.storageDataInfo objectForKey:kGTMotionIntervalStorageKey] doubleValue];
+    double threshold = [[_trainingData.storageDataInfo objectForKey:kGTMotionThresholdStorageKey] doubleValue];
+    double directionThres = [[_trainingData.storageDataInfo objectForKey:kGTDirectionThresholdStorageKey] doubleValue];
+    enum ThresholdMode thMode = [[_trainingData.storageDataInfo objectForKey:kGTMotionThresholdModeStorageKey] intValue];
+    
+    // using settings from user defaults
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+
+    
+    BOOL userDefaultsForSettings = [defaults boolForKey:@"Filesettings"];
+    if (!userDefaultsForSettings) {
+        interval = [defaults doubleForKey:kGTMotionIntervalStorageKey];
+        threshold = [defaults doubleForKey:kGTMotionThresholdStorageKey];
+        directionThres = [defaults doubleForKey:kGTDirectionThresholdStorageKey];
+        thMode = [defaults integerForKey:kGTMotionThresholdModeStorageKey];
+        
+        // update the storageinfo of the trainingdata
+        NSMutableDictionary* newStorageInfo = [NSMutableDictionary dictionaryWithDictionary:_trainingData.storageDataInfo];
+        [newStorageInfo setObject:[NSNumber numberWithDouble:interval] forKey:kGTMotionIntervalStorageKey];
+        [newStorageInfo setObject:[NSNumber numberWithDouble:threshold] forKey:kGTMotionThresholdStorageKey];
+        [newStorageInfo setObject:[NSNumber numberWithDouble:directionThres] forKey:kGTDirectionThresholdStorageKey];
+        [newStorageInfo setObject:[NSNumber numberWithInt:thMode] forKey:kGTMotionThresholdModeStorageKey];
+        _trainingData.storageDataInfo = newStorageInfo;
+     
     }
     
+    double classThres = [defaults doubleForKey:kGRClassificatinThresholdStorageKey];
+    int patternToUseCount  = [defaults integerForKey:kGRClassificatinPatternCountStorageKey];
+    
+    
+    self.motionSensor.detectionInterval = interval;
+    self.motionSensor.gravitationThreshold = threshold;
+    self.motionSensor.thresholdMode = thMode;
+    
+    [self setUniformGestureWeights:[GRGestureWeights defaultWeights] InStorrageData:_trainingData];
+    
+    // set up filter chain
+    _filterChain = [[GRFilterChain alloc] init];
+    GRDirectionFilter* directionFilter = [[GRDirectionFilter alloc] init];
+    directionFilter.directionThreshold = directionThres;
+    GREqualityFilter* equalityFilter = [[GREqualityFilter alloc] init];
+    [_filterChain addFilter:directionFilter WithName:@"DirectionFilter"];
+    [_filterChain addFilter:equalityFilter WithName:@"EqualityFilter"];
+
+    // filtering trainingdata
+    [_trainingData filterStorrageDataWith:_filterChain];
+    
+    [self.feedback preloadSaySoundsForTexts:[_trainingData classLabels] synchronous:NO];
+    //ToDo: save feedback sounds from preload cache
+    
+    _nnClassifier = [[GRNNClassifier alloc]init];
+    _nnClassifier.referenceDataStorage = _trainingData;
+    _nnClassifier.classificationThreshold = classThres;
+    _nnClassifier.patternToUseCount = patternToUseCount;
+    
+    // get host and port from user defaults
+    NSString* host = [defaults stringForKey:@"Host"];
+    NSUInteger port = [defaults integerForKey:@"Port"];
+    NSInteger timeout = TIMEOUT;
+    _networkController = [[GRNetworkClientController alloc] initWithHost:host AndPort:port];
+    _networkController.connectionTimeout = timeout;
+    
+    // set up the view
+    if (self.viewController) {
+        [(GRViewController*)self.viewController setDelegate:self];
+        // using key value observing to set the storageInfoLabel text when it was created
+        [(GRViewController*)self.viewController addObserver:self forKeyPath:@"storageInfoLabel" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:NULL];
+    }
+    
+    if ([defaults boolForKey:@"BackupDataSet"]) {
+        [self backUp];
+    }
+    
+    [self evaluationOutput];
+    
+}
+
+-(void) evaluationOutput{
+
+    //preferences
+    Log(@"Konfiguration");
+    Log(@"%@",[self getPreferencesAsText]);
+    
+    // average vector count per class
+    Log(@"Average vector count per record of gesture classes");
+    for (NSString* classLabel in [_trainingData.storageData allKeys]) {
+        double avrCount = 0;
+        GRRecordSet* classRecord = [_trainingData.storageData objectForKey:classLabel];
+        for (GRGesture* gesture in classRecord) {
+            avrCount += [gesture.record count];
+        }
+        avrCount /= [classRecord count];
+        Log(@"%@: %.2f",classLabel,avrCount);
+    }
+}
+
+-(void) backUp{
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"HHmmddMMyy"];
+    NSString* dateString = [dateFormat stringFromDate:[NSDate date]];
+    
+    NSString* documentDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    
+    //NSString* fileName = [NSString stringWithFormat:@"%@_new_%@",dateString,kDataStorageFileName];
+    NSString* fileName = kDataStorageFileName;
+    fileName = [[fileName stringByDeletingPathExtension] stringByAppendingFormat:@"_%@.%@",[_trainingData.storageDataInfo objectForKey:kGTRecordingDateStorageKey], [fileName pathExtension]];
+    NSString* storageFilePath = [documentDir stringByAppendingPathComponent:fileName];
+    
+    [_trainingData saveToFile:storageFilePath];
+    
+    NSString* txtFilePath = [storageFilePath stringByReplacingOccurrencesOfString:[storageFilePath pathExtension] withString:@"txt"];
+    [self saveDataStorage:_trainingData toTextFile:txtFilePath];
+    
+}
+
+#pragma mark - private methods
+
+-(void) filterLiveData{
+    
+    _liveData = [_filterChain filterData:_liveData];
+    
+}
+
+- (void) setUniformGestureWeights:(GRGestureWeights*)gestureWeights InStorrageData:(GRDataStorage*) storage{
+    
+    for (NSString* classLabel in storage.storageData) {
+        for (GRGesture* gesture in [storage.storageData objectForKey:classLabel]) {
+            
+            gesture.gestureWeights = gestureWeights;
+            
+        }
+        
+    }
 }
 
 -(void) setIsAlgorithmRunning:(BOOL)running{
@@ -151,15 +276,22 @@
     [text appendFormat:@"Motion sensing : %.0fHz\n",[[_trainingData.storageDataInfo objectForKey:kGTMotionIntervalStorageKey] doubleValue]];
     [text appendFormat:@"Motion threshold : %.2fg\n",[[_trainingData.storageDataInfo objectForKey:kGTMotionThresholdStorageKey] doubleValue]];
     //[text appendFormat:@"Motion threshold mode : %@\n",[[_trainingData.storageDataInfo objectForKey:kGTMotionThresholdModeStorageKey] string]];
-    [text appendFormat:@"Direction filter threshold: %.2f\n",DIRECTION_FILTER_THRESHOLD];
+    [text appendFormat:@"Direction filter threshold: %.3f\n",[[_trainingData.storageDataInfo objectForKey:kGTDirectionThresholdStorageKey] doubleValue]];
     
     return text;
 }
 
+-(void) showAlertWithText:(NSString*) alertText{
+    Log(@"ERROR: %@",alertText);
+    UIAlertView* allert = [[UIAlertView alloc] initWithTitle:@"Error" message:alertText delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [allert show];
+}
+
 // using key value observing to set the storageInfoLabel text when it was created
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
-    if(keyPath == @"storageInfoLabel" && object != nil){
+    if(keyPath == @"storageInfoLabel" && object != nil){          
         [((GRViewController*)self.viewController).storageInfoLabel setText:[self getPreferencesAsText]];
+
     }
 }
 

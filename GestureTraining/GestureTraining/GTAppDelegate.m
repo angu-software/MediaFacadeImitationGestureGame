@@ -22,14 +22,10 @@
     
     self.viewController = [[GTViewController alloc] initWithNibName:@"GTViewController" bundle:nil];
     self.viewController.pickerLabels = [NSArray arrayWithObjects:
-                                        @"Square",
-                                        @"Circle",
-                                        @"Triangle",
-                                        @"Wave",
-                                        @"One",
-                                        @"Two",
-                                        @"Three",
-                                        @"Santas house", nil];
+                                        @"Quadrat",
+                                        @"Kreis",
+                                        @"Dreieck",
+                                        @"Haus", nil];
     
     mainController = [[GTMainController alloc] init];
     mainController.viewController = self.viewController;

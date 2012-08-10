@@ -11,9 +11,23 @@
 
 #pragma mark - GRGestureWeights implementation
 
+#define kLengthWeightKey @"kLengthWeightKey"
+#define kMaxXWeightKey @"kMaxXWeightKey"
+#define kMaxYWeightKey @"kMaxYWeightKey"
+#define kMaxZWeightKey @"kMaxZWeightKey"
+#define kMeanXWeightKey @"kMeanXWeightKey"
+#define kMeanYWeightKey @"kMeanYWeightKey"
+#define kMeanZWeightKey @"kMeanZWeightKey"
+#define kMedianXWeightKey @"kMedianXWeightKey"
+#define kMedianYWeightKey @"kMedianYWeightKey"
+#define kMedianZWeightKey @"kMedianZWeightKey"
+#define kPowerKey @"kPowerKey"
+#define kSpeedKey @"kSpeedKey"
+#define kSpatExtKey @"kSpatExtKey"
+
 @implementation GRGestureWeights
 
-@synthesize lenghtWeight = _lenghtWeight;
+@synthesize lengthWeight = _lengthWeight;
 @synthesize maxXWeight = _maxXWeight;
 @synthesize maxYWeight = _maxYWeight;
 @synthesize maxZWeight = _maxZWeight;
@@ -27,11 +41,31 @@
 @synthesize spatialExtendWeight = _spatialExtendWeight;
 @synthesize speedWeight = _speedWeight;
 
++(GRGestureWeights*)defaultWeights{
+    GRGestureWeights* defaultWeights = [[GRGestureWeights alloc] init];
+    
+    defaultWeights.lengthWeight = WEIGHT_LEN;
+    defaultWeights.maxXWeight = WEIGHT_MAX_X;
+    defaultWeights.maxYWeight = WEIGHT_MAX_Y;
+    defaultWeights.maxZWeight = WEIGHT_MAX_Z;
+    defaultWeights.meanXWeight = WEIGHT_MEAN_X;
+    defaultWeights.meanYWeight = WEIGHT_MEAN_Y;
+    defaultWeights.meanZWeight = WEIGHT_MEAN_Z;
+    defaultWeights.medianXWeight = WEIGHT_MEDIAN_X;
+    defaultWeights.medianYWeight = WEIGHT_MEDIAN_Y;
+    defaultWeights.medianZWeight = WEIGHT_MEDIAN_Z;
+    defaultWeights.powerWeight = WEIGHT_POWER;
+    defaultWeights.speedWeight = WEIGHT_SPEED;
+    defaultWeights.spatialExtendWeight = WEIGHT_SPAEXT;
+    
+    return defaultWeights;
+}
+
 - (id)init
 {
     self = [super init];
     if (self) {
-        _lenghtWeight = 1;
+        _lengthWeight = 1;
         _maxXWeight = 1;
         _maxYWeight = 1;
         _maxZWeight = 1;
@@ -48,12 +82,48 @@
     return self;
 }
 
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    self = [super init];
+    if (self) {
+        _lengthWeight = [aDecoder decodeDoubleForKey:kLengthWeightKey];
+        _maxXWeight = [aDecoder decodeDoubleForKey:kMaxXWeightKey];
+        _maxYWeight = [aDecoder decodeDoubleForKey:kMaxYWeightKey];
+        _maxZWeight = [aDecoder decodeDoubleForKey:kMaxZWeightKey];
+        _meanXWeight = [aDecoder decodeDoubleForKey:kMeanXWeightKey];
+        _meanYWeight = [aDecoder decodeDoubleForKey:kMeanYWeightKey];
+        _meanZWeight = [aDecoder decodeDoubleForKey:kMeanZWeightKey];
+        _medianXWeight = [aDecoder decodeDoubleForKey:kMedianXWeightKey];
+        _medianYWeight = [aDecoder decodeDoubleForKey:kMedianYWeightKey];
+        _medianZWeight = [aDecoder decodeDoubleForKey:kMedianZWeightKey];
+        _powerWeight = [aDecoder decodeDoubleForKey:kPowerKey];
+        _spatialExtendWeight = [aDecoder decodeDoubleForKey:kSpatExtKey];
+        _speedWeight = [aDecoder decodeDoubleForKey:kSpeedKey];
+    }
+    return self;
+}
+
+-(void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeDouble:_lengthWeight forKey:kLengthWeightKey];
+    [aCoder encodeDouble:_maxXWeight forKey:kMaxXWeightKey];
+    [aCoder encodeDouble:_maxYWeight forKey:kMaxYWeightKey];
+    [aCoder encodeDouble:_maxZWeight forKey:kMaxZWeightKey];
+    [aCoder encodeDouble:_meanXWeight forKey:kMeanXWeightKey];
+    [aCoder encodeDouble:_meanYWeight forKey:kMeanYWeightKey];
+    [aCoder encodeDouble:_meanZWeight forKey:kMeanZWeightKey];
+    [aCoder encodeDouble:_medianXWeight forKey:kMedianXWeightKey];
+    [aCoder encodeDouble:_medianYWeight forKey:kMedianYWeightKey];
+    [aCoder encodeDouble:_medianZWeight forKey:kMedianZWeightKey];
+    [aCoder encodeDouble:_powerWeight forKey:kPowerKey];
+    [aCoder encodeDouble:_spatialExtendWeight forKey:kSpatExtKey];
+     [aCoder encodeDouble:_speedWeight forKey:kSpeedKey];
+}
+
 @end
 
 #pragma mark - GRGesture implementation
 
 @implementation GRGesture
-@synthesize lenght = _lenght;
+@synthesize length = _length;
 @synthesize record = _record;
 @synthesize maxX = _maxX;
 @synthesize maxY = _maxY;
@@ -72,8 +142,6 @@
 -(id)initWithRecord:(GRRecord*)record{
 
     if (self = [super init]) {
-        _record = [record copy];
-        _lenght = [_record count];
         _maxX = 0;
         _maxY = 0;
         _maxZ = 0;
@@ -86,7 +154,8 @@
         _power = 0;
         _speed = 0;
         _spatialExtend = 0;
-        _gestureWeights = [[GRGestureWeights alloc]init];
+        _gestureWeights = [GRGestureWeights defaultWeights];
+        _record = [record copy];
         if (_record) {
             [self calcPropertiesWith:_record];
         }        
@@ -100,6 +169,7 @@
 -(id)initWithCoder:(NSCoder *)aDecoder{
     if (self = [super init]) {
         _record = (GRRecord*)[aDecoder decodeObjectForKey:@"recordData"];
+        _gestureWeights = (GRGestureWeights*) [aDecoder decodeObjectForKey:@"gestureWeights"];
         [self calcPropertiesWith:_record];
     }
     return self;
@@ -107,12 +177,13 @@
 
 - (void)encodeWithCoder:(NSCoder *)aCoder{
     [aCoder encodeObject:self.record forKey:@"recordData"];
+    [aCoder encodeObject:self.gestureWeights forKey:@"gestureWeights"];
 }
 
 -(double) distanceTo:(GRGesture*) gesture{
 
-    // calc weightend euclidean distance
-    double dist = sqrt(pow(self.lenght - gesture.lenght,2.0f) * _gestureWeights.lenghtWeight +
+    // calc weighted euclidean distance
+    double dist = sqrt(pow(self.length - gesture.length,2.0f) * _gestureWeights.lengthWeight +
                        pow(self.maxX - gesture.maxX,2.0f) * _gestureWeights.maxXWeight + 
                        pow(self.maxY - gesture.maxY,2.0f) * _gestureWeights.maxYWeight +
                        pow(self.maxZ - gesture.maxZ,2.0f) * _gestureWeights.maxZWeight +
@@ -124,16 +195,16 @@
                        pow(self.medianZ - gesture.medianZ,2.0f) * _gestureWeights.medianZWeight +
                        pow(self.power - gesture.power,2.0f) * _gestureWeights.powerWeight +
                        pow(self.speed - gesture.speed,2.0f) * _gestureWeights.speedWeight +
-                       pow(self.spatialExtend - gesture.spatialExtend,2.0f) *   _gestureWeights.spatialExtendWeight);
+                       pow(self.spatialExtend - gesture.spatialExtend,2.0f) * _gestureWeights.spatialExtendWeight);
     // evtl noch die vektoren (record) einfließen lassen
-    
+    //Log("distance: %f",dist);
     return dist;
 }
 
--(double) euclideanNorm{
+-(double) gestureNorm{
     
     // calc weightend euclidean norm
-    return sqrt(pow(self.lenght,2.0f) * _gestureWeights.lenghtWeight + 
+    return sqrt(pow(self.length,2.0f) * _gestureWeights.lengthWeight + 
                 pow(self.maxX,2.0f) * _gestureWeights.maxXWeight + 
                 pow(self.maxY,2.0f) * _gestureWeights.maxYWeight +
                 pow(self.maxZ,2.0f) * _gestureWeights.maxZWeight +
@@ -153,8 +224,8 @@
 #pragma mark - private methods
 
 -(void)calcPropertiesWith:(GRRecord*)record{
-
-    NSUInteger recordLen = [record count];
+    
+    _length = [record count];
     
     double s = 0;
     double l = 0;
@@ -188,13 +259,13 @@
     }
     
     // mean
-    _meanX /= (double)recordLen;
-    _meanY /= (double)recordLen;
-    _meanZ /= (double)recordLen;
+    _meanX /= (double)_length;
+    _meanY /= (double)_length;
+    _meanZ /= (double)_length;
     
-    _power = s/(double)recordLen;
+    _power = s/(double)_length;
     _spatialExtend = s/l;
-    _speed = s*l/pow((double)recordLen,2);
+    _speed = s*l/pow((double)_length,2);
     
     //median
     _medianX = [self medianOfRecord:record ForVectorPosition:kVectorPositionX];
@@ -286,7 +357,7 @@
     [strGesture appendFormat:@", mean(x=%f,y=%f,z=%f)", self.meanX, self.meanY, self.meanZ];
     [strGesture appendFormat:@", median(x=%f,y=%f,z=%f)", self.medianX, self.medianY, self.medianZ];
     [strGesture appendFormat:@", power=%f, speed=%f, spatial extent=%f", self.power, self.speed, self.spatialExtend];
-    [strGesture appendFormat:@"lenght=%d", self.lenght];
+    [strGesture appendFormat:@"length=%d", self.length];
     //[strGesture appendFormat:@", data=%@ ", self.record];
     
     return strGesture;

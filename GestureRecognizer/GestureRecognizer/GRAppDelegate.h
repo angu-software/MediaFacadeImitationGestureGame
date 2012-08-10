@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GRMainController.h"
 
 @class GRViewController;
 
-@interface GRAppDelegate : UIResponder <UIApplicationDelegate>
+@interface GRAppDelegate : UIResponder <UIApplicationDelegate>{
+
+    GRMainController* _mainController;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 

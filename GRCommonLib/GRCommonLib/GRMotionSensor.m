@@ -32,7 +32,8 @@
              self.gravitationThreshold,
              TM2S(self.thresholdMode));
         NSOperationQueue* accQueue = [[NSOperationQueue alloc] init];
-        [_motionManager startAccelerometerUpdatesToQueue:accQueue withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
+        [_motionManager startAccelerometerUpdatesToQueue:accQueue
+                                             withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
             /*XLog(@"Motion: (x=%.2f,y=%.2f;z=%.2f)",
                  accelerometerData.acceleration.x,
                  accelerometerData.acceleration.y,
@@ -43,7 +44,8 @@
                
                 // motion starts
                 isMotionInProgress = YES;
-                [self.delegate motionDetected:self WithAcceleration:_currAcceleration];
+                [self.delegate motionDetected:self 
+                             WithAcceleration:_currAcceleration];
             }else if(isMotionInProgress){
                 // motion finished
                 isMotionInProgress = NO;
@@ -81,12 +83,12 @@
             thresValueTest = fabs(acceleration.z);
             break;
         default:
-            // euclids norm
-            thresValueTest = sqrtf(powf(acceleration.x, 2.0f) + powf(acceleration.y, 2.0f) + powf(acceleration.z, 2.0f));
+            // calculation of the euclidean norm
+            thresValueTest = sqrt(pow(acceleration.x, 2.0f) + pow(acceleration.y, 2.0f) + pow(acceleration.z, 2.0f));
             break;
     }
     
-    return thresValueTest >= (self.gravitationThreshold);
+    return thresValueTest >= self.gravitationThreshold;
     
 }
 

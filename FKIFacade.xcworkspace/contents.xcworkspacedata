@@ -8,15 +8,9 @@
       location = "group:GestureTraining/GestureTraining.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:GestureVisulizer/GestureVisulizer.xcodeproj">
+      location = "group:GRCommonLib/GRCommonLib.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:MFThrowingPoetry/MFThrowingPoetry.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:MFThrowingPoetry/../FKIFacadeWirelessServer/FKIFacadeWirelessServer.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:ThrowingPoetry/ThrowingPoetry.xcodeproj">
+      location = "group:IGGRemoteScreen/IGGRemoteScreen.xcodeproj">
    </FileRef>
 </Workspace>

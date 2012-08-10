@@ -20,7 +20,7 @@
 
 // filters the recordet data before stored as GRGesture
 @property (strong) id<GRFilter> dataFilter;
-@property NSUInteger minRecordLenght;
+@property NSUInteger minRecordLength;
 
 -(void)recordData:(CMAcceleration) data ForLabel:(NSString*) label;
 -(void)closeDataSetForLabel:(NSString*) dataLabel;

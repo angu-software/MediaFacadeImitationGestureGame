@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "GRConstants.h"
 
-@interface GRGestureWeights : NSObject
+@interface GRGestureWeights : NSObject <NSCoding>
 
-@property NSUInteger lenghtWeight;
+@property NSUInteger lengthWeight;
 @property double maxXWeight;
 @property double maxYWeight;
 @property double maxZWeight;
@@ -25,13 +25,15 @@
 @property double spatialExtendWeight;
 @property double speedWeight;
 
++(GRGestureWeights*)defaultWeights;
+
 @end
 
 @interface GRGesture : NSObject <NSCoding>
 
 @property (readonly) GRRecord* record;
 
-@property NSUInteger lenght;
+@property NSUInteger length;
 @property double maxX;
 @property double maxY;
 @property double maxZ;
@@ -49,5 +51,5 @@
 
 -(id)initWithRecord:(GRRecord*)record;
 -(double) distanceTo:(GRGesture*) gesture;
--(double) euclideanNorm;
+-(double) gestureNorm;
 @end

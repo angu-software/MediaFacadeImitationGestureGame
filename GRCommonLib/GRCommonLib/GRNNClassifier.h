@@ -10,12 +10,15 @@
 #import "GRDataStorage.h"
 #import "GRGesture.h"
 
+#define kNoMatch @"No match"
+
 @interface GRNNClassifier : NSObject
 
 @property GRDataStorage* referenceDataStorage;
+@property double classificationThreshold;
+@property NSUInteger patternToUseCount;
+@property double minDistance;
 
-//-(NSString*) bestClassMatchFor:(GRRecord*)record;
-
--(NSString*) bestClassMatchFor:(GRGesture*)gesture;
+-(NSString*) bestClassMatchForGesture:(GRGesture*)gesture;
 
 @end

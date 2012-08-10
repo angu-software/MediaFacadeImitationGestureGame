@@ -7,9 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "IGGMainController.h"
 
-@interface IGGAppDelegate : NSObject <NSApplicationDelegate>
+@interface IGGAppDelegate : NSObject <NSApplicationDelegate>{
+
+    IGGMainController *_mainController;
+}
 
 @property (assign) IBOutlet NSWindow *window;
+@property (strong) IBOutlet IGGMainViewController *viewController;
 
 @end

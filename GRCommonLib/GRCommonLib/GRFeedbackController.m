@@ -24,27 +24,58 @@
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 }
 
+- (NSString *)filePathForSaySoundName:(NSString *)name {
+    NSString* docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString* soundFilePath = [docPath stringByAppendingPathComponent:name];
+    return soundFilePath;
+}
+
+-(void) saveSaySound:(NSData*)soundData toFilesystemWithName:(NSString*)name{
+    NSString *soundFilePath = [self filePathForSaySoundName:name];
+    [soundData writeToFile:soundFilePath atomically:YES];
+}
+
+-(NSData*) loadSaySoundFromFileSystemWithName:(NSString*)name{
+    NSString* soundFilePath = [self filePathForSaySoundName:name];
+    NSData* soundData = [NSData dataWithContentsOfFile:soundFilePath];
+    return soundData;
+}
+
+- (void)addSaySound:(NSData *)data withName:(NSString *)name {
+    [_preloadedSaySounds setObject:data forKey:name];
+    //save data to filesystem
+    [self saveSaySound:data toFilesystemWithName:name];
+}
+
 -(void) preloadSaySoundsForTexts:(NSArray*) texts synchronous:(BOOL) synchronous{
 
     _preloadedSaySounds = [[NSMutableDictionary alloc] initWithCapacity:[texts count] > MAX_SAYSOUNDCACHE ? MAX_SAYSOUNDCACHE : [texts count]];
     
     for (NSString* text in texts) {
-        NSMutableURLRequest * request = [self createRequestForText:text];
-        
-        if (synchronous) {
-            NSData* data = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-            if (data) {
-                [_preloadedSaySounds setObject:data forKey:text];
-            }
+        // load from file
+        NSData* soundData = [self loadSaySoundFromFileSystemWithName:text];
+        if (soundData) {
+            [_preloadedSaySounds setObject:soundData forKey:text];
         }else {
-            [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse * response, NSData *data, NSError *error) {
-                
-                @synchronized(_preloadedSaySounds){
-                    
-                    [_preloadedSaySounds setObject:data forKey:text];
+            // request
+            NSMutableURLRequest * request = [self createRequestForText:text];
+            
+            if (synchronous) {
+                NSData* data = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+                if (data) {
+                    [self addSaySound:data withName:text];
                 }
-                
-            }];
+            }else {
+                [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse * response, NSData *data, NSError *error) {
+                    
+                    @synchronized(_preloadedSaySounds){
+                        if (data != nil) {
+                            [self addSaySound:data withName:text];                            
+                        }
+                    }
+                }];
+            }
+
         }
     }
 }
@@ -60,8 +91,9 @@
             NSMutableURLRequest *request = [self createRequestForText:text];
             
             [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse * response, NSData *data, NSError *error) {
-                
-                [self playSaySoundWithData:data];
+                if (data != nil) {
+                    [self playSaySoundWithData:data];    
+                }
                 
             }];
         }
@@ -76,7 +108,7 @@
 }
 
 - (NSMutableURLRequest *)createRequestForText:(NSString *)text {
-    NSString* lang = @"en";
+    NSString* lang = @"de";
     NSString* speakServiceAddress = [NSString stringWithFormat:@"http://www.translate.google.com/translate_tts?tl=%@&q=%@",lang,text];
     
     NSURL* url = [NSURL URLWithString: [speakServiceAddress stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];

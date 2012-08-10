@@ -7,7 +7,19 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "IGGShape.h"
 
-@interface IGGShapeView : NSView
+@interface IGGShapeView : NSView <NSAnimationDelegate>{
+
+    NSViewAnimation* _appearAnimation;
+    NSViewAnimation* _vanishAnimation;
+}
+
+@property (readonly) IGGShape* shape;
+@property (nonatomic) NSPoint center;
+
+-(id) initWithShape:(IGGShape*) shape;
+//-(void) appear;
+//-(void) vanish;
 
 @end

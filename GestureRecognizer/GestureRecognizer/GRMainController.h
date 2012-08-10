@@ -12,14 +12,18 @@
 #import "GRViewController.h"
 #import "GRFilterChain.h"
 #import "GRNNClassifier.h"
+#import "GRNetworkClientController.h"
 
 @interface GRMainController : GRMainControllerBase {
     NSMutableArray * _liveData;
     GRFilterChain* _filterChain;
     GRNNClassifier* _nnClassifier;
     GRDataStorage* _referenceModel;
+    GRNetworkClientController* _networkController;
 }
 
 @property (readonly) GRDataStorage* trainingData;
+@property NSString* gameHost;
+@property NSInteger hostPort;
 
 @end

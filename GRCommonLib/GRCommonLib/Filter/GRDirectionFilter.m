@@ -31,9 +31,9 @@
         GRMotionVector* currVector = [data objectAtIndex:curr];
         GRMotionVector* nextVector = [data objectAtIndex:curr + 1];
         
-        GRMotionVector* diffVector = [GRVectorOperation differenceOf:currVector And:nextVector];
-        
-        if ([GRVectorOperation euclideanNormOf:diffVector] < self.directionThreshold) {
+        if (fabs(currVector.x - nextVector.x) < self.directionThreshold &&
+            fabs(currVector.y - nextVector.y) < self.directionThreshold &&
+            fabs(currVector.z - nextVector.z) < self.directionThreshold) {
             [data removeObject:nextVector];
         }else {
             curr += 1;

@@ -12,14 +12,14 @@
 
 @implementation GTDataRecorder
 @synthesize dataFilter = _dataFilter;
-@synthesize minRecordLenght = _minRecordLenght;
+@synthesize minRecordLength = _minRecordLength;
 - (id)init
 {
     self = [super init];
     if (self) {
         recordStates = [[NSMutableDictionary alloc] init];
         _recordBuffer = [[GRRecord alloc] init];
-        _minRecordLenght = 0;
+        _minRecordLength = 0;
     }
     return self;
 }
@@ -32,7 +32,7 @@
 -(void)closeDataSetForLabel:(NSString*) dataLabel{
     [self setRecordOpen:NO ForLabel:dataLabel];
     
-    if ([_recordBuffer count] > _minRecordLenght) {
+    if ([_recordBuffer count] > _minRecordLength) {
         GRRecordSet* trainingSet = [_storageData objectForKey:dataLabel];
         if (!trainingSet) {
             // add new trainings set

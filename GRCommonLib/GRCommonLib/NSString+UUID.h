@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSString_UUID : NSObject
-
+@interface NSString (UUID)
++ (NSString *)uuid;
 @end

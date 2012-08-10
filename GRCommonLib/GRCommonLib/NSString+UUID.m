@@ -8,6 +8,16 @@
 
 #import "NSString+UUID.h"
 
-@implementation NSString_UUID
+@implementation NSString (UUID)
+
++ (NSString *)uuid{
+    NSString *uuidString = nil;
+    CFUUIDRef uuid = CFUUIDCreate(NULL);
+    if (uuid) {
+        uuidString = (__bridge NSString *)CFUUIDCreateString(NULL, uuid);
+        CFRelease(uuid);
+    }
+    return uuidString;
+}
 
 @end

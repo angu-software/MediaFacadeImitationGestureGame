@@ -42,6 +42,18 @@
 		</dict>
 		<dict>
 			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>DirectionThreshold</string>
+			<key>Key</key>
+			<string>DirectionFilterThreshold</string>
+			<key>DefaultValue</key>
+			<string>0</string>
+			<key>KeyboardType</key>
+			<string>NumbersAndPunctuation</string>
+		</dict>
+		<dict>
+			<key>Type</key>
 			<string>PSMultiValueSpecifier</string>
 			<key>Title</key>
 			<string>ThresholdMode</string>

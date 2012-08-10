@@ -41,7 +41,6 @@ enum ThresholdMode{
 
 // interval in Hz
 - (id)initWithInterval:(NSUInteger)valueHz;
-
 -(void) beginSensing;
 -(void) endSensing;
 

@@ -7,7 +7,29 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GCDAsyncSocket.h"
 
-@interface IGGNetworkServerController : NSObject
+@protocol IGGNetworkServerDelegate <NSObject>
 
+-(void) newClientConnectedWithID:(NSString*) uID;
+-(void) receivedClassLabel:(NSString*) classLabel FromClient:(NSString*) uID;
+
+@optional
+-(void) clientDisconnected;
+
+@end
+
+@interface IGGNetworkServerController : NSObject <GCDAsyncSocketDelegate> {
+
+    dispatch_queue_t socketQueue;
+    GCDAsyncSocket* _listenSocket;
+}
+
+@property id<IGGNetworkServerDelegate> delegate;
+@property (readonly, strong) NSString* host;
+@property (readonly) NSUInteger port;
+
+-(id)initWithListenPort:(NSUInteger) port;
+-(void)startListen;
+-(void) stopListen;
 @end

@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E18B61F615B61A8600FAFE5B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E18B61F515B61A8600FAFE5B /* QuartzCore.framework */; };
+		E19F6B0215B57D8800182BA4 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = E19F6B0115B57D8800182BA4 /* GCDAsyncSocket.m */; };
+		E19F6B0515B57E2000182BA4 /* IGGNetworkServerController.m in Sources */ = {isa = PBXBuildFile; fileRef = E19F6B0415B57E2000182BA4 /* IGGNetworkServerController.m */; };
+		E19F6B0715B5847B00182BA4 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E19F6B0615B5847B00182BA4 /* Security.framework */; };
+		E19F6B0A15B584B100182BA4 /* IGGMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = E19F6B0915B584B100182BA4 /* IGGMainController.m */; };
+		E19F6B1015B5B4DD00182BA4 /* IGGMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E19F6B0F15B5B4DD00182BA4 /* IGGMainViewController.m */; };
+		E1B40E2C15B5B9070056BB03 /* IGGShapeView.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B40E2B15B5B9070056BB03 /* IGGShapeView.m */; };
+		E1B40E3015B5C6690056BB03 /* IGGShape.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B40E2F15B5C6680056BB03 /* IGGShape.m */; };
 		E1CD6E2A15B46F0000AB949D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1CD6E2915B46F0000AB949D /* Cocoa.framework */; };
 		E1CD6E3415B46F0000AB949D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1CD6E3215B46F0000AB949D /* InfoPlist.strings */; };
 		E1CD6E3615B46F0000AB949D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E1CD6E3515B46F0000AB949D /* main.m */; };
@@ -16,6 +24,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E18B61F515B61A8600FAFE5B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		E19F6B0015B57D8800182BA4 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = ../../lib/GCDAsyncSocket.h; sourceTree = "<group>"; };
+		E19F6B0115B57D8800182BA4 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocket.m; path = ../../lib/GCDAsyncSocket.m; sourceTree = "<group>"; };
+		E19F6B0315B57E2000182BA4 /* IGGNetworkServerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGGNetworkServerController.h; sourceTree = "<group>"; };
+		E19F6B0415B57E2000182BA4 /* IGGNetworkServerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGGNetworkServerController.m; sourceTree = "<group>"; };
+		E19F6B0615B5847B00182BA4 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		E19F6B0815B584B100182BA4 /* IGGMainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGGMainController.h; sourceTree = "<group>"; };
+		E19F6B0915B584B100182BA4 /* IGGMainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGGMainController.m; sourceTree = "<group>"; };
+		E19F6B0E15B5B4DD00182BA4 /* IGGMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGGMainViewController.h; sourceTree = "<group>"; };
+		E19F6B0F15B5B4DD00182BA4 /* IGGMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGGMainViewController.m; sourceTree = "<group>"; };
+		E1B40E2A15B5B9070056BB03 /* IGGShapeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGGShapeView.h; sourceTree = "<group>"; };
+		E1B40E2B15B5B9070056BB03 /* IGGShapeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGGShapeView.m; sourceTree = "<group>"; };
+		E1B40E2E15B5C6680056BB03 /* IGGShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGGShape.h; sourceTree = "<group>"; };
+		E1B40E2F15B5C6680056BB03 /* IGGShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGGShape.m; sourceTree = "<group>"; };
 		E1CD6E2515B46F0000AB949D /* IGGRemoteScreen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IGGRemoteScreen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1CD6E2915B46F0000AB949D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E1CD6E2C15B46F0000AB949D /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -36,6 +58,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E18B61F615B61A8600FAFE5B /* QuartzCore.framework in Frameworks */,
+				E19F6B0715B5847B00182BA4 /* Security.framework in Frameworks */,
 				E1CD6E2A15B46F0000AB949D /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -43,10 +67,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E19F6AFD15B57D7900182BA4 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				E19F6AFF15B57D8800182BA4 /* GCDAsyncSocket */,
+			);
+			name = Libraries;
+			path = IGGRemoteScreen;
+			sourceTree = "<group>";
+		};
+		E19F6AFF15B57D8800182BA4 /* GCDAsyncSocket */ = {
+			isa = PBXGroup;
+			children = (
+				E19F6B0015B57D8800182BA4 /* GCDAsyncSocket.h */,
+				E19F6B0115B57D8800182BA4 /* GCDAsyncSocket.m */,
+			);
+			name = GCDAsyncSocket;
+			path = ../../GestureRecognizer/GestureRecognizer;
+			sourceTree = "<group>";
+		};
 		E1CD6E1A15B46EFF00AB949D = {
 			isa = PBXGroup;
 			children = (
 				E1CD6E2F15B46F0000AB949D /* IGGRemoteScreen */,
+				E19F6AFD15B57D7900182BA4 /* Libraries */,
 				E1CD6E2815B46F0000AB949D /* Frameworks */,
 				E1CD6E2615B46F0000AB949D /* Products */,
 			);
@@ -63,6 +107,8 @@
 		E1CD6E2815B46F0000AB949D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E18B61F515B61A8600FAFE5B /* QuartzCore.framework */,
+				E19F6B0615B5847B00182BA4 /* Security.framework */,
 				E1CD6E2915B46F0000AB949D /* Cocoa.framework */,
 				E1CD6E2B15B46F0000AB949D /* Other Frameworks */,
 			);
@@ -84,6 +130,16 @@
 			children = (
 				E1CD6E3B15B46F0000AB949D /* IGGAppDelegate.h */,
 				E1CD6E3C15B46F0000AB949D /* IGGAppDelegate.m */,
+				E19F6B0315B57E2000182BA4 /* IGGNetworkServerController.h */,
+				E19F6B0415B57E2000182BA4 /* IGGNetworkServerController.m */,
+				E19F6B0815B584B100182BA4 /* IGGMainController.h */,
+				E19F6B0915B584B100182BA4 /* IGGMainController.m */,
+				E19F6B0E15B5B4DD00182BA4 /* IGGMainViewController.h */,
+				E19F6B0F15B5B4DD00182BA4 /* IGGMainViewController.m */,
+				E1B40E2E15B5C6680056BB03 /* IGGShape.h */,
+				E1B40E2F15B5C6680056BB03 /* IGGShape.m */,
+				E1B40E2A15B5B9070056BB03 /* IGGShapeView.h */,
+				E1B40E2B15B5B9070056BB03 /* IGGShapeView.m */,
 				E1CD6E3E15B46F0000AB949D /* MainMenu.xib */,
 				E1CD6E3015B46F0000AB949D /* Supporting Files */,
 			);
@@ -168,6 +224,12 @@
 			files = (
 				E1CD6E3615B46F0000AB949D /* main.m in Sources */,
 				E1CD6E3D15B46F0000AB949D /* IGGAppDelegate.m in Sources */,
+				E19F6B0215B57D8800182BA4 /* GCDAsyncSocket.m in Sources */,
+				E19F6B0515B57E2000182BA4 /* IGGNetworkServerController.m in Sources */,
+				E19F6B0A15B584B100182BA4 /* IGGMainController.m in Sources */,
+				E19F6B1015B5B4DD00182BA4 /* IGGMainViewController.m in Sources */,
+				E1B40E2C15B5B9070056BB03 /* IGGShapeView.m in Sources */,
+				E1B40E3015B5C6690056BB03 /* IGGShape.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,6 +351,7 @@
 				E1CD6E4515B46F0000AB949D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

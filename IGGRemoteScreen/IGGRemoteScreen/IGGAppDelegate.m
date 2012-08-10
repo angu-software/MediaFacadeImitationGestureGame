@@ -11,10 +11,14 @@
 @implementation IGGAppDelegate
 
 @synthesize window = _window;
+@synthesize viewController = _viewController;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    // Insert code here to initialize your application
+    _mainController = [[IGGMainController alloc] initWithViewController:self.viewController];
+    [_mainController launch];
+    
+    
 }
 
 @end

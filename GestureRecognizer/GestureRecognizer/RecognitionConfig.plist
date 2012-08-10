@@ -30,7 +30,5 @@
 		<key>SpatialExtension</key>
 		<real>0.5</real>
 	</dict>
-	<key>MinRecordLen</key>
-	<integer>10</integer>
 </dict>
 </plist>

@@ -8,10 +8,6 @@
 
 #import "GRMainControllerBase.h"
 
-#define MOTION_INTERVAL 50.0f // Hz arcording to Documentation
-#define MOTION_THRESHOLD 1.2f //1.2f //1.4f //1.6f
-#define MOTION_TM TMAllAxes
-
 @interface  GRMainControllerBase ()
 
 @end
@@ -40,8 +36,14 @@
     [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
                                                              [NSNumber numberWithDouble:MOTION_INTERVAL],kGTMotionIntervalStorageKey,
                                                              [NSNumber numberWithDouble:MOTION_THRESHOLD],kGTMotionThresholdStorageKey,
+                                                             [NSNumber numberWithDouble:DIRECTION_FILTER_THRESHOLD],kGTDirectionThresholdStorageKey,
+                                                             [NSNumber numberWithDouble:CLASSIFICATION_THRES],kGRClassificatinThresholdStorageKey,
+                                                             [NSNumber numberWithInt:PATTERN_TO_USE_COUNT],kGRClassificatinPatternCountStorageKey,
                                                              TM2S(MOTION_TM),kGTMotionThresholdModeStorageKey,
                                                              dateString, kGTRecordingDateStorageKey,
+                                                             HOST,kHostStorageKey,
+                                                             [NSNumber numberWithInt:PORT],kPortStorageKey,
+                                                             
                                                              nil]];
 
 }
@@ -53,14 +55,67 @@
     
 }
 
+-(void) relauch{
+
+}
+
+-(void) hold{
+
+}
+
+-(void) tearDown{
+
+}
+
+-(void)saveDataStorage:(GRDataStorage*) storage toTextFile:(NSString*) filePath{
+    
+    NSMutableString* textViewContent = [[NSMutableString alloc] init];
+    
+    //storageInfo
+    [textViewContent appendString:@"######## StorageInfo ########\n"];
+    for (NSString* infoKey in [storage.storageDataInfo allKeys]) {
+        [textViewContent appendFormat:@"# %@: %@\n",infoKey, [storage.storageDataInfo objectForKey:infoKey]];
+    }
+    //storage data
+    NSUInteger num = 0;
+    NSUInteger lineNum = 0;
+    [textViewContent appendString:@"######## StorageData ########\n"];
+    [textViewContent appendString:@"# lineNum;classNum;Class;Norm;X;Y;Z;VecPos\n"];
+    for (NSString* classLabel in [storage.storageData allKeys]) {
+        //Log(@"%@",classLabel);
+        ++num;
+        for (GRGesture* gesture in [storage.storageData objectForKey:classLabel]) {
+            GRRecord* record = gesture.record;
+            for (GRMotionVector* vector in record) {
+                [textViewContent appendFormat:@"%d;%d;%@;%f;%f;%f;%f\n",
+                 ++lineNum,
+                 num,
+                 classLabel,
+                 [gesture gestureNorm],
+                 vector.x,
+                 vector.y,
+                 vector.z];
+            }
+        }
+    }
+    
+    // save to file
+    NSData* txtData = [textViewContent dataUsingEncoding:NSUTF8StringEncoding];
+    if ([txtData writeToFile:filePath atomically:YES]) {
+        //[_statusLabel setStringValue:[NSString stringWithFormat:@"Saved to: %@",txtFilePath]];
+    };
+}
+
 #pragma mark - GTMotionSensorDelegate methods
 
 -(void)motionDetected:(id)sender WithAcceleration:(CMAcceleration) acceleration{
     // start recording data
+    /*
     Log(@"Motion detected at: (x=%.2f,y=%.2f,z=%.2f)",
          acceleration.x,
          acceleration.y,
          acceleration.z);
+     */
 }
 
 #pragma mark - GTViewController methods

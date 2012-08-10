@@ -7,6 +7,7 @@
 //
 
 #import "GRDataStorage.h"
+#import "GRGesture.h"
 
 @implementation GRDataStorage
 
@@ -41,9 +42,10 @@
         GRRecordSet *classSet = [_storageData objectForKey:classLabel];
         
         for (NSUInteger idx = 0; idx < [classSet count]; ++idx) {
-            GRRecord *classRec = [classSet objectAtIndex:idx];
-            GRRecord *filteredRec = [filter filterData:classRec];
-            [classSet replaceObjectAtIndex:idx withObject:filteredRec];
+            GRGesture *classRec = [classSet objectAtIndex:idx];
+            GRRecord *filteredRec = [filter filterData:[GRRecord arrayWithArray:classRec.record]];
+            classRec = [[GRGesture alloc] initWithRecord:filteredRec];
+            [classSet replaceObjectAtIndex:idx withObject:classRec];
         }
     }
     
@@ -64,13 +66,15 @@
 
 -(void)saveToFile:(NSString*) fileName{
     
+    NSMutableDictionary* saveStorage = [[NSMutableDictionary alloc] initWithDictionary:_storageData];
+    
     if (self.storageDataInfo) {
-        [_storageData setObject:self.storageDataInfo forKey:kGTStorageInfoIdentifier];
+        [saveStorage setObject:self.storageDataInfo forKey:kGTStorageInfoIdentifier];
     }
     
-    Log(@"Saving Storage Data%@",_storageData);
+    Log(@"Saving Storage Data%@",saveStorage);
     
-    if ([NSKeyedArchiver archiveRootObject:self.storageData toFile:fileName]) {
+    if ([NSKeyedArchiver archiveRootObject:saveStorage toFile:fileName]) {
         Log(@"Storage saved to %@", [fileName lastPathComponent]);
     }else {
         Log(@"Storage not writen to file");

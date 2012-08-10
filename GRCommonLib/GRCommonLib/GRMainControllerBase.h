@@ -11,6 +11,8 @@
 #import "GRMotionSensor.h"
 #import "GRFeedbackController.h"
 #import "GRViewControllerDelegate.h"
+#import "GRDataStorage.h"
+#import "GRGesture.h"
 
 @interface GRMainControllerBase : NSObject <GRMotionSensorDelegate, GRViewControllerDelegate>
 
@@ -20,5 +22,10 @@
 
 -(void)setUpEnvironment;
 -(void) launch;
+-(void) relauch;
+-(void) hold;
+-(void) tearDown;
+
+-(void)saveDataStorage:(GRDataStorage*) storage toTextFile:(NSString*) filePath;
 
 @end

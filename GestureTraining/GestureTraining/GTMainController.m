@@ -20,7 +20,7 @@
     
     [super setUpEnvironment];
     NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
-
+    
     if (self.viewController) {
         [(GTViewController*)self.viewController setDelegate:self];
     }
@@ -31,18 +31,19 @@
     self.motionSensor.delegate = self;
     
     // set up feedback
-    NSArray* sayArray = [NSArray arrayWithObjects:@"Go", nil];
+    NSArray* sayArray = [NSArray arrayWithObjects:@"Start", nil];
     [self.feedback preloadSaySoundsForTexts:sayArray synchronous:NO];
     
     //set up data recorder
     _dataRecorder = [[GTDataRecorder alloc] init];
-    _dataRecorder.minRecordLenght = MIN_RECORD_LEN;
-    _dataRecorder.storageDataInfo = [userDefaults dictionaryRepresentation];
+    _dataRecorder.minRecordLength = MIN_RECORD_LEN;
+    
+    _dataRecorder.storageDataInfo = [self extractStorrageDataInfoFromUserDefaults:userDefaults];
     
     // set up filter chain
     GRFilterChain* filterChain = [[GRFilterChain alloc] init];
     GRDirectionFilter* directionFilter = [[GRDirectionFilter alloc] init];
-    directionFilter.directionThreshold = DIRECTION_FILTER_THRESHOLD;
+    directionFilter.directionThreshold = [userDefaults doubleForKey:kGTDirectionThresholdStorageKey];
     GREqualityFilter* equalityFilter = [[GREqualityFilter alloc] init];
     [filterChain addFilter:directionFilter WithName:@"DirectionFilter"];
     [filterChain addFilter:equalityFilter WithName:@"EqualityFilter"];
@@ -58,8 +59,31 @@
 
     NSString* fileName = kDataStorageFileName;
     fileName = [[fileName stringByDeletingPathExtension] stringByAppendingFormat:@"_%@.%@",[_dataRecorder.storageDataInfo objectForKey:kGTRecordingDateStorageKey], [fileName pathExtension]];
+    NSString* storageFilePath = [documentDir stringByAppendingPathComponent:fileName];
     
-    [_dataRecorder saveToFile:[documentDir stringByAppendingPathComponent:fileName]];
+    [_dataRecorder saveToFile:storageFilePath];
+    
+    NSString* txtFilePath = [storageFilePath stringByReplacingOccurrencesOfString:[storageFilePath pathExtension] withString:@"txt"];
+    [self saveDataStorage:_dataRecorder toTextFile:txtFilePath];
+    
+}
+
+#pragma mark - private methods
+
+- (NSMutableDictionary *)extractStorrageDataInfoFromUserDefaults:(NSUserDefaults *)userDefaults {
+    // getStorrageInfo from user defaults
+    NSDictionary* userDefaultsDict = [userDefaults dictionaryRepresentation];
+    NSMutableDictionary* storageDataInfo = [NSMutableDictionary dictionary];
+    for (NSString* key in [userDefaultsDict allKeys]) {
+        if ([key isEqualToString:kGTMotionIntervalStorageKey] ||
+            [key isEqualToString:kGTMotionThresholdStorageKey] ||
+            [key isEqualToString:kGTMotionThresholdModeStorageKey] ||
+            [key isEqualToString:kGTRecordingDateStorageKey]||
+            [key isEqualToString:kGTDirectionThresholdStorageKey]) {
+            [storageDataInfo setObject:[userDefaultsDict objectForKey:key] forKey:key];
+        }
+    }
+    return storageDataInfo;
 }
 
 #pragma mark - GTMotionSensorDelegate methods
@@ -76,7 +100,7 @@
 
 - (void)recordingStartRequestet:(GTViewController *)sender{
     recordLabel = sender.selectedLabel;
-    [self.feedback say:@"Go"];
+    [self.feedback say:@"Start"];
     [super recordingStartRequestet:sender];
 }
 
